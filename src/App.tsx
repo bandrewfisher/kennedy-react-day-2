@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import CountInputChanges from './CountInputChanges';
+import CountSecrets from './CountSecrets'
 
 interface User {
   id: number;
@@ -35,21 +37,31 @@ function App() {
   // When I get paid, THEN I will buy shampoo
   // When I get shampoo, then I will give it to you
 
-  async function getUsers() {
-    // fetch("https://jsonplaceholder.typicode.com/users") // Get the data from the endpoint
-    //   .then((response) => response.json()) // When you get the data, then what do you do?
-    //   .then((users) => console.log(users)); // When it gets converted to JSON, then console.log it
-    const response = await fetch("https://jsonplaceholder.typicode.com/users"); // This could take a long time!
-    const fetchedUsers = await response.json();
-    setUsers(fetchedUsers);
-  }
+  
 
+  // Use effect can't take an async callback function
   useEffect(() => {
+    async function getUsers() {
+      // fetch("https://jsonplaceholder.typicode.com/users") // Get the data from the endpoint
+      //   .then((response) => response.json()) // When you get the data, then what do you do?
+      //   .then((users) => console.log(users)); // When it gets converted to JSON, then console.log it
+
+      // console.log('Hello there')
+
+      const response = await fetch("https://jsonplaceholder.typicode.com/users"); // This could take a long time!
+      const fetchedUsers = await response.json();
+      setUsers(fetchedUsers);
+      console.log(fetchedUsers)
+      console.log('hello there')
+    }
     getUsers();
   }, []);
 
+
   return (
     <div>
+      <CountSecrets />
+      {/* <CountInputChanges /> */}
       <p>{clickedString}</p>
       <button
         onClick={() => {
